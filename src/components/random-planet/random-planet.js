@@ -6,7 +6,7 @@ import "./random-planet.css";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
 
-import SwapiService from "../../services/swapi-service"
+import SwapiService from "../../services/swapi-service";
 
 const PlanetView = ({planet}) => {
 		const {

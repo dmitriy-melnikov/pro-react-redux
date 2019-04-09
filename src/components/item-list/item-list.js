@@ -5,21 +5,29 @@ import "./item-list.css";
 import SwapiService from "../../services/swapi-service";
 
 import Spinner from '../spinner';
+import ErrorIndicator from "../error-indicator";
 
 export default class ItemList extends Component {
 
   swapi = new SwapiService();
 
   state = {
-    peopleList: null
+    peopleList: null,
+				error: false
   };
+
+		onError = () => {
+				this.setState({
+						error: true
+				})
+		};
 
   getPeopleList = () => {
 				this.swapi.getAllPeople()
       .then(peopleList => this.setState({
         peopleList
       }))
-      .catch(err => console.log(err))
+      .catch(this.onError)
   };
 
   componentDidMount() {
@@ -41,10 +49,12 @@ export default class ItemList extends Component {
   };
 
   render() {
-    const { peopleList } = this.state;
+    const { peopleList, error } = this.state;
+
     if(!peopleList) {
-      return <Spinner />
+      return !error ? <Spinner /> : <ErrorIndicator />
     }
+
     const items =  this.renderItems(peopleList);
 
     return (
