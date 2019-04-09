@@ -6,7 +6,7 @@ constructor() => render() => componentDidMount()
 UPDATES
 ______________
 New Props
-            => render() => componentDidUpdate()
+            => render() => componentDidUpdate(prevProps, prevState)
 setState
 
 UNMOUNTING
