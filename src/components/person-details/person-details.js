@@ -4,6 +4,7 @@ import './person-details.css';
 
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
+import ErrorButton from '../error-button';
 
 import SwapiService from "../../services/swapi-service";
 
@@ -134,6 +135,7 @@ export default class PersonDetails extends Component {
 														<span>{eyeColor}</span>
 												</li>
 										</ul>
+										<ErrorButton />
 								</div>
 						</div>
 				)

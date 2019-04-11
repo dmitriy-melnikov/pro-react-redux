@@ -2,17 +2,17 @@ import React, { Component } from "react";
 
 import "./item-list.css";
 
-import SwapiService from "../../services/swapi-service";
+//import SwapiService from "../../services/swapi-service";
 
 import Spinner from '../spinner';
 import ErrorIndicator from "../error-indicator";
 
 export default class ItemList extends Component {
 
-  swapi = new SwapiService();
+  //swapi = new SwapiService();
 
   state = {
-    peopleList: null,
+    itemList: null,
 				error: false
   };
 
@@ -22,21 +22,27 @@ export default class ItemList extends Component {
 				})
 		};
 
-  getPeopleList = () => {
+  /*getPeopleList = () => {
 				this.swapi.getAllPeople()
-      .then(peopleList => this.setState({
-        peopleList
+      .then(itemList => this.setState({
+        itemList
       }))
       .catch(this.onError)
-  };
+  };*/
 
   componentDidMount() {
-    this.getPeopleList();
-
+  		//debugger;
+  		const { getData } = this.props;
+				getData()
+						.then(itemList => this.setState({
+								itemList
+						}))
+						.catch(this.onError)
   }
 
 
   renderItems = (arr) => {
+  		console.log(arr);
 				return arr.map(({name, id}) => (
       <li
         className="list-group-item"
@@ -49,13 +55,13 @@ export default class ItemList extends Component {
   };
 
   render() {
-    const { peopleList, error } = this.state;
+    const { itemList, error } = this.state;
 
-    if(!peopleList) {
+    if(!itemList) {
       return !error ? <Spinner /> : <ErrorIndicator />
     }
 
-    const items =  this.renderItems(peopleList);
+    const items =  this.renderItems(itemList);
 
     return (
       <ul className="item-list list-group">
