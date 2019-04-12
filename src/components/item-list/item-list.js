@@ -2,14 +2,10 @@ import React, { Component } from "react";
 
 import "./item-list.css";
 
-//import SwapiService from "../../services/swapi-service";
-
 import Spinner from '../spinner';
 import ErrorIndicator from "../error-indicator";
 
 export default class ItemList extends Component {
-
-  //swapi = new SwapiService();
 
   state = {
     itemList: null,
@@ -21,14 +17,6 @@ export default class ItemList extends Component {
 						error: true
 				})
 		};
-
-  /*getPeopleList = () => {
-				this.swapi.getAllPeople()
-      .then(itemList => this.setState({
-        itemList
-      }))
-      .catch(this.onError)
-  };*/
 
   componentDidMount() {
   		//debugger;
