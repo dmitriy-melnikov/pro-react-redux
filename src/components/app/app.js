@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import PeoplePage from '../people-page';
-import ErrorIndicator from '../error-indicator';
 import ErrorButton from '../error-button';
 import ErrorBoundry from '../error-boundry';
 
