@@ -39,8 +39,9 @@ export default class PeoplePage extends Component {
 								/>
 						</ErrorBoundry>
 				);
+				{/*<Row left={itemList} right={itemDetails} />*/}
 				return (
-								<Row left={itemList} right={itemDetails} />
+								<Row left={itemList} />
 				)
 		}
 }

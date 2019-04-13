@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
+import PeoplePage from '../people-page';
 import ErrorBoundry from '../error-boundry';
-import Row from '../row';
+//import Row from '../row';
 import ItemDetails, { Record } from "../item-details/item-details";
 
 import SwapiService from '../../services/swapi-service';
@@ -73,9 +74,9 @@ export default class App extends Component {
 										</button>
 										<ErrorButton />
 								</div>*/}
-								{/*<PeoplePage/>*/}
+								<PeoplePage/>
 								
-								<Row left={personDetails} right={planetDetails}/>
+							{/*	<Row left={personDetails} right={planetDetails}/>*/}
 						</ErrorBoundry>
 				);
 		}
