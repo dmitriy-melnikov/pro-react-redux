@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-//import PeoplePage from '../people-page';
-//import ErrorButton from '../error-button';
 import ErrorBoundry from '../error-boundry';
 import Row from '../row';
-import ItemDetails from "../item-details";
+import ItemDetails, { Record } from "../item-details/item-details";
 
 import SwapiService from '../../services/swapi-service';
 
@@ -40,18 +38,28 @@ export default class App extends Component {
 		render() {
 				const planet = this.state.showRandomPlanet ?	<RandomPlanet/> : null;
 				
-				const {getPerson, getStarship} = this.swapi;
+				const {getPerson, getPlanet, getPersonImage, getPlanetImage} = this.swapi;
 				
 				const personDetails = (
 						<ItemDetails
-							itemId={11}
+							itemId={9}
 							getData={getPerson}
-						/>);
-				const starshipDetails = (
+							getImageUrl={getPersonImage}
+						>
+								<Record field="gender" label="Gender" />
+								<Record field="birthYear" label="Birth year" />
+								<Record field="eyeColor" label="Eye color" />
+						</ItemDetails>);
+				const planetDetails = (
 						<ItemDetails
 								itemId={6}
-								getData={getStarship}
-						/>);
+								getData={getPlanet}
+								getImageUrl={getPlanetImage}
+						>
+								<Record field="population" label="Population" />
+								<Record field="rotationPeriod" label="Rotation period" />
+								<Record field="diameter" label="Diameter" />
+						</ItemDetails>);
 				return (
 						<ErrorBoundry>
 								<Header/>
@@ -67,7 +75,7 @@ export default class App extends Component {
 								</div>*/}
 								{/*<PeoplePage/>*/}
 								
-								<Row left={personDetails} right={starshipDetails}/>
+								<Row left={personDetails} right={planetDetails}/>
 						</ErrorBoundry>
 				);
 		}

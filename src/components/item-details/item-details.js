@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Children, cloneElement} from 'react';
 
 import './item-details.css';
 
@@ -6,10 +6,24 @@ import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
 import ErrorButton from '../error-button';
 
+const Record = ({item, field, label}) => {
+		return(
+				<li className="list-group-item">
+						<span className="term">{label}</span>
+						<span>{item[field]}</span>
+				</li>
+		)
+};
+
+export {
+		Record
+}
+
 export default class ItemDetails extends Component {
 
 		state = {
 				item: null,
+				image: null,
 				loading: true,
 				error: false
 		};
@@ -27,9 +41,9 @@ export default class ItemDetails extends Component {
 				})
 		};
 
-		updatePerson() {
+		updateItem() {
 				this.onLoading();
-				const {itemId, getData} = this.props;
+				const {itemId, getData, getImageUrl} = this.props;
 				if (!itemId) {
 						return
 				}
@@ -37,6 +51,7 @@ export default class ItemDetails extends Component {
 						.then((item) => {
 								this.setState({
 										item,
+										image: getImageUrl(item),
 										error: false,
 										loading: false
 								})
@@ -45,16 +60,17 @@ export default class ItemDetails extends Component {
 		}
 
 		componentDidMount() {
-				this.updatePerson()
+				this.updateItem()
 		}
 
 		componentDidUpdate(prevProps, prevState) {
 				if(this.props.itemId !== prevProps.itemId) {
-						this.updatePerson()
+						this.updateItem()
 				}
 		}
 
 		render() {
+				const {item, image} = this.state;
 				if (!this.state.item) {
 						return <span>Select a item from a list</span>
 				}
@@ -64,35 +80,21 @@ export default class ItemDetails extends Component {
 				if(this.state.loading) {
 						return <Spinner/>
 				}
-				const {item} = this.state;
-				console.log(item);
-				/*const {
-						id,
-						name,
-						gender,
-						birthYear,
-						eyeColor
-				} = this.state.item;*/
+				const {name} = item;
+				console.log('item from i-d render', item);
 				
 				return (
 						<div className="item-details card">
 								<img className="item-image"
-													src={`https://starwars-visualguide.com/assets/img/characters/${item.id}.jpg`}/>
+													src={image}/>
 								<div className="card-body">
-										<h4>{item.name}</h4>
+										<h4>{name}</h4>
 										<ul className="list-group list-group-flush">
-												<li className="list-group-item">
-														<span className="term">Gender</span>
-														<span>{item.gender}</span>
-												</li>
-												<li className="list-group-item">
-														<span className="term">Birth Year</span>
-														<span>{item.birthYear}</span>
-												</li>
-												<li className="list-group-item">
-														<span className="term">Eye Color</span>
-														<span>{item.eyeColor}</span>
-												</li>
+												{
+														Children.map(this.props.children, (child) => {
+																return cloneElement(child, {item});
+														})
+												}
 										</ul>
 										<ErrorButton />
 								</div>
