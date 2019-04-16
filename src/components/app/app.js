@@ -2,15 +2,28 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import PeoplePage from '../people-page';
+//import PeoplePage from '../people-page';
 import ErrorBoundry from '../error-boundry';
-//import Row from '../row';
-import ItemDetails, { Record } from "../item-details/item-details";
+import Row from '../row';
+import Record from '../record';
 
+import {
+		PersonList,
+		PlanetList,
+		StarshipList
+} from '../sw-components';
+
+import {
+		PlanetDetails,
+		StarshipDetails
+} from '../sw-components/';
+
+import personDetails from '../sw-components/person-details';
+
+import { SwapiServiceProvider } from '../swapi-service-context';
 import SwapiService from '../../services/swapi-service';
 
 import './app.css';
-
 
 export default class App extends Component {
 		
@@ -39,34 +52,48 @@ export default class App extends Component {
 		render() {
 				const planet = this.state.showRandomPlanet ?	<RandomPlanet/> : null;
 				
-				const {getPerson, getPlanet, getPersonImage, getPlanetImage} = this.swapi;
-				
-				const personDetails = (
-						<ItemDetails
+				/*const personDetails = (
+						<PersonDetails
 							itemId={9}
-							getData={getPerson}
-							getImageUrl={getPersonImage}
 						>
 								<Record field="gender" label="Gender" />
 								<Record field="birthYear" label="Birth year" />
 								<Record field="eyeColor" label="Eye color" />
-						</ItemDetails>);
+						</PersonDetails>);*/
 				const planetDetails = (
-						<ItemDetails
+						<PlanetDetails
 								itemId={6}
-								getData={getPlanet}
-								getImageUrl={getPlanetImage}
 						>
 								<Record field="population" label="Population" />
 								<Record field="rotationPeriod" label="Rotation period" />
 								<Record field="diameter" label="Diameter" />
-						</ItemDetails>);
+						</PlanetDetails>);
+				
+				const starshipDetails = (
+						<StarshipDetails
+								itemId={9}
+						>
+								cargoCapacity: starship.cargo_capacity
+								<Record field="model" label="Model" />
+								<Record field="manufacturer" label="Manufacturer" />
+								<Record field="costInCredits" label="Cost in credits" />
+								<Record field="length" label="Length" />
+								<Record field="crew" label="Crew" />
+								<Record field="passengers" label="Passengers" />
+								<Record field="cargoCapacity" label="Cargo capacity" />
+						</StarshipDetails>);
 				return (
 						<ErrorBoundry>
-								<Header/>
-							{/*	{planet}*/}
-								
-								{/*<div className="row mb2 button-row">
+								<SwapiServiceProvider value={this.swapi} >
+										<Header/>
+										
+										{/*<PersonList/>
+										<PlanetList/>
+										<StarshipList/>*/}
+										
+										{/*	{planet}*/}
+										
+										{/*<div className="row mb2 button-row">
 										<button
 												className="toggle-planet btn btn-warning btn-lg"
 												onClick={this.toggleRandomPlanet}>
@@ -74,9 +101,12 @@ export default class App extends Component {
 										</button>
 										<ErrorButton />
 								</div>*/}
-								<PeoplePage/>
+										
+										{/*<PeoplePage/>*/}
+										
+										<Row left={personDetails}/>
+								</SwapiServiceProvider>
 								
-							{/*	<Row left={personDetails} right={planetDetails}/>*/}
 						</ErrorBoundry>
 				);
 		}
