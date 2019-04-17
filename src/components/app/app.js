@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-//import PeoplePage from '../people-page';
 import ErrorBoundry from '../error-boundry';
+import ErrorButton from '../error-button';
 import Row from '../row';
-import Record from '../record';
 
 import {
 		PersonList,
@@ -22,16 +21,16 @@ import {
 
 import { SwapiServiceProvider } from '../swapi-service-context';
 import SwapiService from '../../services/swapi-service';
+import DummySwapiService from '../../services/dummy-swapi-service';
 
 import './app.css';
 
 export default class App extends Component {
 		
-		swapi = new SwapiService();
-		
 		state = {
 				showRandomPlanet: true,
-				selectedPerson: 5
+				selectedPerson: 5,
+				swapi: new SwapiService()
 		};
 		
 		toggleRandomPlanet = () => {
@@ -40,6 +39,18 @@ export default class App extends Component {
 								showRandomPlanet: !state.showRandomPlanet
 						}
 				});
+		};
+		
+		onServiceChange = () => {
+				this.setState(({swapi}) => {
+								const Service = swapi instanceof SwapiService ?
+										DummySwapiService :
+										SwapiService;
+								return {
+										swapi: new Service()
+								}
+						}
+				)
 		};
 		
 		componentDidCatch() {
@@ -53,36 +64,35 @@ export default class App extends Component {
 				
 				return (
 						<ErrorBoundry>
-								<SwapiServiceProvider value={this.swapi} >
-										<Header/>
-										
-										<PersonList/>
-										<PlanetList/>
-										<StarshipList/>
-										
-										{/*	{planet}*/}
-										
-										{/*<div className="row mb2 button-row">
-										<button
-												className="toggle-planet btn btn-warning btn-lg"
-												onClick={this.toggleRandomPlanet}>
-												Toggle Random Planet
-										</button>
-										<ErrorButton />
-								</div>*/}
-										
-										{/*<PeoplePage/>*/}
-										
+								<SwapiServiceProvider value={this.state.swapi} >
+										<Header  onServiceChange={this.onServiceChange}/>
+										{planet}
+										<div className="row mb2 button-row">
+												<button
+														className="toggle-planet btn btn-warning btn-lg"
+														onClick={this.toggleRandomPlanet}>
+														Toggle Random Planet
+												</button>
+												<ErrorButton />
+										</div>
 										<Row
-												left={
-														<PersonDetails itemId={this.state.selectedPerson} />
-												}
+												left={<PersonList/>}
 												right={
-														<PlanetDetails itemId={this.state.selectedPerson} />
-												}
+														<PersonDetails
+																itemId={this.state.selectedPerson}
+														/>
+												} />
+										<Row
+												left={<PlanetList/>}
+												right={
+														<PlanetDetails
+																itemId={this.state.selectedPerson}
+														/>}
+										/>
+										<Row
+												left={<StarshipList/>}
 										/>
 								</SwapiServiceProvider>
-								
 						</ErrorBoundry>
 				);
 		}
