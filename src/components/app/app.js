@@ -56,9 +56,9 @@ export default class App extends Component {
 								<SwapiServiceProvider value={this.swapi} >
 										<Header/>
 										
-										{/*<PersonList/>
+										<PersonList/>
 										<PlanetList/>
-										<StarshipList/>*/}
+										<StarshipList/>
 										
 										{/*	{planet}*/}
 										
