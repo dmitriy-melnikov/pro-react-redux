@@ -15,10 +15,10 @@ import {
 
 import {
 		PlanetDetails,
+		PersonDetails,
 		StarshipDetails
 } from '../sw-components/';
 
-import personDetails from '../sw-components/person-details';
 
 import { SwapiServiceProvider } from '../swapi-service-context';
 import SwapiService from '../../services/swapi-service';
@@ -48,40 +48,9 @@ export default class App extends Component {
 				})
 		}
 		
-		
 		render() {
 				const planet = this.state.showRandomPlanet ?	<RandomPlanet/> : null;
 				
-				/*const personDetails = (
-						<PersonDetails
-							itemId={9}
-						>
-								<Record field="gender" label="Gender" />
-								<Record field="birthYear" label="Birth year" />
-								<Record field="eyeColor" label="Eye color" />
-						</PersonDetails>);*/
-				const planetDetails = (
-						<PlanetDetails
-								itemId={6}
-						>
-								<Record field="population" label="Population" />
-								<Record field="rotationPeriod" label="Rotation period" />
-								<Record field="diameter" label="Diameter" />
-						</PlanetDetails>);
-				
-				const starshipDetails = (
-						<StarshipDetails
-								itemId={9}
-						>
-								cargoCapacity: starship.cargo_capacity
-								<Record field="model" label="Model" />
-								<Record field="manufacturer" label="Manufacturer" />
-								<Record field="costInCredits" label="Cost in credits" />
-								<Record field="length" label="Length" />
-								<Record field="crew" label="Crew" />
-								<Record field="passengers" label="Passengers" />
-								<Record field="cargoCapacity" label="Cargo capacity" />
-						</StarshipDetails>);
 				return (
 						<ErrorBoundry>
 								<SwapiServiceProvider value={this.swapi} >
@@ -104,7 +73,14 @@ export default class App extends Component {
 										
 										{/*<PeoplePage/>*/}
 										
-										<Row left={personDetails}/>
+										<Row
+												left={
+														<PersonDetails itemId={this.state.selectedPerson} />
+												}
+												right={
+														<PlanetDetails itemId={this.state.selectedPerson} />
+												}
+										/>
 								</SwapiServiceProvider>
 								
 						</ErrorBoundry>

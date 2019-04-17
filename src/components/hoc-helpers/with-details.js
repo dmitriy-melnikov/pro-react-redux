@@ -3,7 +3,7 @@ import React, {Component, Children, cloneElement} from "react";
 import Spinner from '../spinner';
 import ErrorIndicator from "../error-indicator";
 
-const withDetails = (View, mappedFn) => {
+const withDetails = (View) => {
 		return class extends Component {
 				
 				state = {
@@ -27,8 +27,8 @@ const withDetails = (View, mappedFn) => {
 				
 				updateItem() {
 						this.onLoading();
-						const {itemId, swapi} = this.props;
-						const {getData, getImgUrl} = mappedFn(swapi);
+						console.log(this.props);
+						const {itemId, getData, getImgUrl} = this.props;
 						if (!itemId) {
 								return
 						}

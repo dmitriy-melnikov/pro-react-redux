@@ -1,9 +1,7 @@
 import React from 'react';
 
-import './item-details.css';
-
 import ErrorButton from '../error-button';
-
+import './item-details.css';
 
 const ItemDetails = (props) =>  {
 		const { item: { name }, image, detailsRender } = props;

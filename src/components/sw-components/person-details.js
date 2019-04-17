@@ -5,8 +5,6 @@ import Record from '../record';
 
 import {withSwapiService, withDetails} from '../hoc-helpers'
 
-
-
 const mapMethodsToProps = (swapiService) => {
 		return {
 		getData: swapiService.getPerson,
@@ -14,16 +12,15 @@ const mapMethodsToProps = (swapiService) => {
 		}
 };
 
-const PersonDetails = withSwapiService(withDetails(ItemDetails, mapMethodsToProps));
+const PersonItem =  withSwapiService(withDetails(ItemDetails), mapMethodsToProps);
 
-const personDetails = (
-		<PersonDetails
-				itemId={9}
-		>
+const PersonDetails = (props) =>
+		(
+				<PersonItem {...props} >
 				<Record field="gender" label="Gender"/>
 				<Record field="birthYear" label="Birth year"/>
 				<Record field="eyeColor" label="Eye color"/>
-		</PersonDetails>
+		</PersonItem>
 );
 
-export default personDetails;
+export default PersonDetails;
