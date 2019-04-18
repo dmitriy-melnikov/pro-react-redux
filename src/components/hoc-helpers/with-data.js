@@ -14,7 +14,8 @@ const withData = (View) => {
 				
 				onError = () => {
 						this.setState({
-								error: true
+								error: true,
+								loading: false
 						})
 				};
 				

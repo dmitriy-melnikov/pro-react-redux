@@ -4,19 +4,9 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorBoundry from '../error-boundry';
 import ErrorButton from '../error-button';
-import Row from '../row';
 
-import {
-		PersonList,
-		PlanetList,
-		StarshipList
-} from '../sw-components';
+import {PeoplePage, PlanetsPage, StarshipsPage} from '../pages';
 
-import {
-		PlanetDetails,
-		PersonDetails,
-		StarshipDetails
-} from '../sw-components/';
 
 
 import { SwapiServiceProvider } from '../swapi-service-context';
@@ -75,23 +65,9 @@ export default class App extends Component {
 												</button>
 												<ErrorButton />
 										</div>
-										<Row
-												left={<PersonList/>}
-												right={
-														<PersonDetails
-																itemId={this.state.selectedPerson}
-														/>
-												} />
-										<Row
-												left={<PlanetList/>}
-												right={
-														<PlanetDetails
-																itemId={this.state.selectedPerson}
-														/>}
-										/>
-										<Row
-												left={<StarshipList/>}
-										/>
+									<PeoplePage />
+								 <PlanetsPage />
+									<StarshipsPage />
 								</SwapiServiceProvider>
 						</ErrorBoundry>
 				);
