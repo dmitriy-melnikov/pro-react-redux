@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from 'prop-types';
 import { random } from "lodash";
 
 import "./random-planet.css";
@@ -43,6 +44,25 @@ const PlanetView = ({planet}) => {
 };
 
 export default class RandomPlanet extends Component {
+		
+		static defaultProps = {
+				updateInterval: 3000
+		};
+		
+		static propTypes = {
+				updateInterval: PropTypes.number.isRequired
+		};
+		
+		/*static propTypes = {
+				updateInterval: (props, propName, componentName) => {
+						const value = props[propName];
+						if(typeof value === 'number' && !isNaN(value)) {
+								return null;
+						}
+						return new TypeError(`${componentName}: ${propName} must be number`);
+				}
+		};*/
+		
 		swapiService = new SwapiService();
 
 		state = {
@@ -75,7 +95,8 @@ export default class RandomPlanet extends Component {
 		};
 
 		componentDidMount() {
-				this.interval = setInterval(this.updatePlanet, 2500)
+				const { updateInterval } = this.props;
+				this.interval = setInterval(this.updatePlanet, updateInterval)
 		};
 
 		componentWillUnmount() {
@@ -102,5 +123,9 @@ export default class RandomPlanet extends Component {
 				)
 		}
 }
+
+/*RandomPlanet.defaultProps = {
+		updateInterval: 3000
+};*/
 
 
