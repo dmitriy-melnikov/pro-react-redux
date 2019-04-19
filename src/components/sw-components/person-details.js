@@ -12,7 +12,7 @@ const mapMethodsToProps = (swapiService) => {
 		}
 };
 
-const PersonItem =  withSwapiService(withDetails(ItemDetails), mapMethodsToProps);
+const PersonItem =  withSwapiService(mapMethodsToProps)(withDetails(ItemDetails));
 
 const PersonDetails = (props) =>
 		(
