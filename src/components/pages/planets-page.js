@@ -1,21 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import ErrorBoundry from '../error-boundry';
 import Row from '../row';
 import { PlanetList, PlanetDetails} from '../sw-components';
 
-export default class PlanetsPage extends Component {
-		state = {
-				selectedItem: null
-		};
+ const PlanetsPage = () => {
 		
-		onItemSelected = (selectedItem) => {
-				this.setState({
-						selectedItem
-				})
-		};
-		
-		render() {
 				const { selectedItem } = this.state;
 				return(
 						<ErrorBoundry>
@@ -29,5 +19,4 @@ export default class PlanetsPage extends Component {
 						</ErrorBoundry>
 				
 				)
-		}
 }
