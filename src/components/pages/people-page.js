@@ -7,7 +7,9 @@ import { PersonList} from '../sw-components';
 const PeoplePage  = ({history}) =>  {
 		return(
 				<ErrorBoundry>
-						<PersonList onItemSelected={(itemId) => history.push(itemId)} />
+						<PersonList
+								onItemSelected={(itemId) => history.push(itemId)}
+						/>
 				</ErrorBoundry>
 				
 		)

@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {
+		BrowserRouter as Router,
+		Route,
+		Switch,
+		Redirect
+} from 'react-router-dom';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
@@ -9,7 +14,9 @@ import ErrorButton from '../error-button';
 import {
 		PeoplePage,
 		PlanetsPage,
-		StarshipsPage
+		StarshipsPage,
+		LoginPage,
+		SecretPage
 } from '../pages';
 
 import {
@@ -27,7 +34,14 @@ export default class App extends Component {
 		state = {
 				showRandomPlanet: true,
 				selectedPerson: 5,
-				swapi: new SwapiService()
+				swapi: new SwapiService(),
+				isLoggedIn: false
+		};
+		
+		onLogin = () => {
+				this.setState({
+						isLoggedIn: true
+				})
 		};
 		
 		toggleRandomPlanet = () => {
@@ -73,36 +87,64 @@ export default class App extends Component {
 														</button>
 														<ErrorButton />
 												</div>
-												
-												<Route
-														path="/"
-														render={() => <h2>Welcom starDb</h2>}
-														exact
-												/>
-												
-												{/*<Route path="/people" render={() => <h2>Welcom PeoplePage</h2>} />*/}
-												<Route
-														path="/people"
-														exact
-														component={PeoplePage}
-												/>
-												<Route
-														path="/people/:id"
-														render={
-																({match}) => {
-																const {id} = match.params;
-																return (<PersonDetails itemId={id} />)
-																}
-														}
+												<Switch>
+														<Route
+																path="/"
+																render={() => <h2>Welcom starDb</h2>}
+																exact
+														/>
 														
-												/>
-												<Route
-														path="/planets/:id?"
-														component={PlanetsPage}
-												/>
-												
-												
-												<Route path="/starships" component={StarshipsPage} />
+														{/*<Route
+																path="/people"
+																render={
+																		() => <h2>Welcom PeoplePage</h2>
+																}
+														/>*/}
+														<Route
+																path="/people"
+																exact
+																component={PeoplePage}
+														/>
+														<Route
+																path="/people/:id"
+																render={
+																		({match}) => {
+																				const {id} = match.params;
+																				return (<PersonDetails itemId={id} />)
+																		}
+																}
+														
+														/>
+														<Route
+																path="/planets/:id?"
+																component={PlanetsPage}
+														/>
+														
+														<Route
+																path="/starships"
+																component={StarshipsPage}
+														/>
+														
+														<Route
+																path="/login"
+																render={
+																		() => <LoginPage
+																				isLoggedIn={this.state.isLoggedIn}
+																				onLogin={this.onLogin}
+																		/>
+																}
+														/>
+														<Route
+																path="/secret"
+																render={
+																		() => <SecretPage
+																				isLoggedIn={this.state.isLoggedIn}
+																		/>
+																}
+														/>
+														{/*<Redirect to="/" />*/}
+														<Route render={() => <h2>Page not found</h2>} />
+												</Switch>
 										</Router>
 										
 								</SwapiServiceProvider>
